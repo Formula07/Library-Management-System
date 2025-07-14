@@ -17,27 +17,6 @@ to handle onboarding, wallet management, transactions, and notifications.
 
 ---
 
-## 🏗️ Architecture Overview
-
-```plaintext
-                          +------------------------+
-                          |   API Gateway (Future) |
-                          +------------------------+
-                                     |
-    +-------------+-----------------+-------------------+-------------+
-    |             |                 |                   |             |
-    ↓             ↓                 ↓                   ↓             ↓
-+-----------+  +-----------+   +-------------+   +--------------+  +-------------+
-| Onboarding|  | Wallet    |   | Transaction |   | Notification |  |  Common     |
-| Service   |  | Service   |   | Service     |   | Service      |  | Module      |
-+-----------+  +-----------+   +-------------+   +--------------+  +-------------+
-       ↕             ↕               ↕                    ↕              |
-     DB: Users     DB: Wallets    DB: Txn Logs           SMTP/SMS        |
-                          ↕               ↕                    ↕              |
-                      Kafka Topics:  --------------------> Notification Queue
-                          └─ TXN_UPDATE_QUEUE
----                          
-
 ## ⚙️ Tech Stack
 
 | Layer            | Technology             |
@@ -61,5 +40,22 @@ to handle onboarding, wallet management, transactions, and notifications.
 | NotificationService   | Sends alerts/notifications to users             |
 | Common                | Shared DTOs, constants, utilities               |
 
+## 🏗️ Architecture Overview
 
-
+```plaintext
+                          +------------------------+
+                          |   API Gateway (Future) |
+                          +------------------------+
+                                     |
+    +-------------+-----------------+-------------------+-------------+
+    |             |                 |                   |             |
+    ↓             ↓                 ↓                   ↓             ↓
++-----------+  +-----------+   +-------------+   +--------------+  +-------------+
+| Onboarding|  | Wallet    |   | Transaction |   | Notification |  |  Common     |
+| Service   |  | Service   |   | Service     |   | Service      |  | Module      |
++-----------+  +-----------+   +-------------+   +--------------+  +-------------+
+       ↕             ↕               ↕                    ↕              |
+     DB: Users     DB: Wallets    DB: Txn Logs           SMTP/SMS        |
+                          ↕               ↕                    ↕              |
+                      Kafka Topics:  --------------------> Notification Queue
+                          └─ TXN_UPDATE_QUEUE
