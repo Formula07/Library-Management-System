@@ -1,61 +1,36 @@
-Digital Wallet – Microservices-Based Payment System
+# 📚 Library Management System – Spring Boot Backend
 
-A scalable, event-driven Digital Wallet backend system built using **Spring Boot**,
-**Kafka** and **JPA**. Designed with modular microservices architecture 
-to handle onboarding, wallet management, transactions, and notifications.
+A robust and extensible backend system for managing a library’s books, members, and lending operations.  
+Built using **Spring Boot**, **JPA**, and **MySQL**, it provides secure REST APIs for managing users, books, and transactions.
 
 ---
 
 ## 📌 Features
 
-- ✅ User onboarding and verification
-- ✅ Wallet creation, balance tracking
-- ✅ Secure fund transfers (credit/debit)
-- ✅ Real-time transaction updates via **Kafka**
-- ✅ Notification service integration
-- ✅ Dockerized microservices for easy deployment
+- ✅ Book catalog management (Add, Update, Delete, Search)  
+- ✅ User/member registration and management  
+- ✅ Book issue and return tracking  
+- ✅ Availability status and due date calculation  
+- ✅ Admin & user role-based access  
+- ✅ Exception handling & logging  
+- ✅ API-first approach – ready for frontend or Postman
 
 ---
-
-## ⚙️ Tech Stack
-
-| Layer            | Technology             |
-| ---------------- | ---------------------- |
-| Backend          | Spring Boot (Java 21)  |
-| Messaging        | Apache Kafka           |
-| Persistence      | JPA, Hibernate         |
-| Database         | MySQL                  |
-| Security         | Spring Security        |
-| Testing          | JUnit, Mockito         |
-
----
-
-## 🧩 Microservices Breakdown
-
-| Service               | Description                                     |
-| --------------------- | ----------------------------------------------- |
-| OnboardingService     | Manages user sign-up and profile verification   |
-| WalletService         | Handles wallet creation, balance updates        |
-| TransactionService    | Processes fund transfers, triggers Kafka events |
-| NotificationService   | Sends alerts/notifications to users             |
-| Common                | Shared DTOs, constants, utilities               |
 
 ## 🏗️ Architecture Overview
 
 ```plaintext
-                          +------------------------+
-                          |   API Gateway (Future) |
-                          +------------------------+
-                                     |
-    +-------------+-----------------+-------------------+-------------+
-    |             |                 |                   |             |
-    ↓             ↓                 ↓                   ↓             ↓
-+-----------+  +-----------+   +-------------+   +--------------+  +-------------+
-| Onboarding|  | Wallet    |   | Transaction |   | Notification |  |  Common     |
-| Service   |  | Service   |   | Service     |   | Service      |  | Module      |
-+-----------+  +-----------+   +-------------+   +--------------+  +-------------+
-       ↕             ↕               ↕                    ↕              |
-     DB: Users     DB: Wallets    DB: Txn Logs           SMTP/SMS        |
-                          ↕               ↕                    ↕              |
-                      Kafka Topics:  --------------------> Notification Queue
-                          └─ TXN_UPDATE_QUEUE
+          +----------------------------+
+          |   Library Management API   |
+          +----------------------------+
+                       |
+        +--------------+---------------+
+        |              |               |
+        ↓              ↓               ↓
++---------------+  +-----------+  +----------------+
+| Book Service  |  | User/Auth |  | Issue/Return   |
+| (Books CRUD)  |  | Service   |  | Service        |
++---------------+  +-----------+  +----------------+
+        |               |               |
+        ↓               ↓               ↓
+    DB: books       DB: users       DB: transactions
